@@ -1,19 +1,19 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-collibraweb-dev-15547-authRole",
-            "UnauthRoleArn": "arn:aws:iam::987938178880:role/amplify-collibraweb-dev-15547-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::987938178880:role/amplify-collibraweb-dev-15547-authRole",
+            "AuthRoleName": "amplify-collibraweb-dev-13613-authRole",
+            "UnauthRoleArn": "arn:aws:iam::987938178880:role/amplify-collibraweb-dev-13613-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::987938178880:role/amplify-collibraweb-dev-13613-authRole",
             "Region": "us-west-2",
-            "DeploymentBucketName": "amplify-collibraweb-dev-15547-deployment",
-            "UnauthRoleName": "amplify-collibraweb-dev-15547-unauthRole",
-            "StackName": "amplify-collibraweb-dev-15547",
-            "StackId": "arn:aws:cloudformation:us-west-2:987938178880:stack/amplify-collibraweb-dev-15547/76fb6b80-69bf-11ea-86fa-0afd1207ca5c",
-            "AmplifyAppId": "d12z7nfpgcb1uk"
+            "DeploymentBucketName": "amplify-collibraweb-dev-13613-deployment",
+            "UnauthRoleName": "amplify-collibraweb-dev-13613-unauthRole",
+            "StackName": "amplify-collibraweb-dev-13613",
+            "StackId": "arn:aws:cloudformation:us-west-2:987938178880:stack/amplify-collibraweb-dev-13613/adf8ce80-6e73-11ea-b6f5-06ce7351dd4e",
+            "AmplifyAppId": "d2d4xy1u986kqj"
         },
         "categories": {
             "auth": {
-                "collibrawebe868d4fc": {}
+                "collibrawebc6c2ead1": {}
             }
         }
     }

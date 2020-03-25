@@ -1,10 +1,15 @@
 {
 	"auth": {
-		"collibrawebe868d4fc": {
+		"collibrawebc6c2ead1": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
-			"dependsOn": [],
-			"customAuth": false
+			"dependsOn": []
+		}
+	},
+	"storage": {
+		"collibraWeb": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
 		}
 	}
 }

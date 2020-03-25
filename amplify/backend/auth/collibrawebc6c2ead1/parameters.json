@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "collibrawebe868d4fc_identitypool_e868d4fc",
+    "identityPoolName": "collibrawebc6c2ead1_identitypool_c6c2ead1",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "collibe868d4fc",
-    "userPoolName": "collibrawebe868d4fc_userpool_e868d4fc",
+    "resourceNameTruncated": "collibc6c2ead1",
+    "userPoolName": "collibrawebc6c2ead1_userpool_c6c2ead1",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -18,7 +18,8 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email"
+        "email",
+        "name"
     ],
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
@@ -28,9 +29,9 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "collibe868d4fc_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "collibc6c2ead1_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "resourceName": "collibrawebe868d4fc",
+    "resourceName": "collibrawebc6c2ead1",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -45,9 +46,11 @@
         ]
     },
     "useDefault": "default",
-    "usernameAttributes": [
-        "email"
-    ],
+    "triggers": "{}",
     "userPoolGroupList": [],
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [],
     "dependsOn": []
 }
