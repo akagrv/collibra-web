@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { Storage } from 'aws-amplify';
-import { AmplifyService } from 'aws-amplify-angular';
+import { Component } from "@angular/core";
+import { Storage } from "aws-amplify";
+import { AmplifyService } from "aws-amplify-angular";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
   amplifyService: AmplifyService;
@@ -14,39 +14,39 @@ export class AppComponent {
   show: boolean = false;
   greeting: string;
   files: any[] = [];
-  usernameAttributes = "email"; 
+  usernameAttributes = "email";
   signUpConfig = {
-    header: 'Create a new account',
+    header: "Create a new account",
     hideAllDefaults: true,
-    defaultCountryCode: '1',
+    defaultCountryCode: "1",
     signUpFields: [
       {
-        label: 'Name',
-        key: 'name',
+        label: "Name",
+        key: "name",
         required: true,
         displayOrder: 1,
-        type: 'string'
+        type: "string"
       },
       {
-        label: 'Email',
-        key: 'email',
+        label: "Email",
+        key: "email",
         required: true,
         displayOrder: 1,
-        type: 'string',
+        type: "string"
       },
       {
-        label: 'Password',
-        key: 'password',
+        label: "Password",
+        key: "password",
         required: true,
         displayOrder: 2,
-        type: 'password'
+        type: "password"
       },
       {
-        label: 'Phone Number',
-        key: 'phone_number',
+        label: "Phone Number",
+        key: "phone_number",
         required: true,
         displayOrder: 3,
-        type: 'string'
+        type: "string"
       }
     ]
   };
@@ -54,28 +54,30 @@ export class AppComponent {
   constructor(public amplify: AmplifyService) {
     this.amplifyService = amplify;
     // this.Storage = this.amplifyService.storage();
-    amplify.auth().currentAuthenticatedUser().then(console.log)
-    this.amplifyService.authStateChange$
-      .subscribe(authState => {
-        this.signedIn = authState.state === 'signedIn';
-        if (!authState.user) {
-          this.user = null;
-        } else {
-          debugger
-          this.user = authState.user;
-          this.greeting = "Hello " + this.user.username;
-          this.displayAllFiles();
-        }
-      });
+    amplify
+      .auth()
+      .currentAuthenticatedUser()
+      .then(console.log);
+    this.amplifyService.authStateChange$.subscribe(authState => {
+      this.signedIn = authState.state === "signedIn";
+      if (!authState.user) {
+        this.user = null;
+      } else {
+        debugger;
+        this.user = authState.user;
+        this.greeting = "Hello hbdkh" + this.user.username;
+        this.displayAllFiles();
+      }
+    });
   }
 
   displayAllFiles() {
-    Storage.list('')
-    .then(result => {
-      this.files = result;
-      console.log(this.files[0]);
-    })
-    .catch(err => console.log(err));
+    Storage.list("")
+      .then(result => {
+        this.files = result;
+        console.log(this.files[0]);
+      })
+      .catch(err => console.log(err));
   }
 
   /**
@@ -97,11 +99,11 @@ export class AppComponent {
    */
   uploadFilesToS3(file: File) {
     Storage.put(file.name, file)
-        .then (result => {
-          console.log(result)
-          this.displayAllFiles();
-        })
-        .catch(err => console.log(err));
+      .then(result => {
+        console.log(result);
+        this.displayAllFiles();
+      })
+      .catch(err => console.log(err));
   }
 
   /**
@@ -124,12 +126,12 @@ export class AppComponent {
    */
   formatBytes(bytes, decimals) {
     if (bytes === 0) {
-      return '0 Bytes';
+      return "0 Bytes";
     }
     const k = 1024;
     const dm = decimals <= 0 ? 0 : decimals || 2;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 }
