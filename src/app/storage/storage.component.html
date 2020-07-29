@@ -1,0 +1,30 @@
+<div
+  class="upload-container mt-4"
+  dragNdrop
+  (fileDropped)="onFileDropped($event)"
+>
+  <input
+    type="file"
+    #fileDropRef
+    id="fileDropRef"
+    multiple
+    (change)="fileUploadHandler($event.target.files)"
+  />
+  <img src="assets/img/dnd/ic-upload-file.svg" alt="" />
+  <h3>Drag and drop file here</h3>
+  <h3>or</h3>
+  <label for="fileDropRef">Browse for file</label>
+</div>
+<div class="files-list">
+  <div class="single-file" *ngFor="let file of files; let i = index">
+    <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file" />
+    <div class="info">
+      <h4 class="name">
+        {{ file?.key }}
+      </h4>
+      <p class="size">
+        {{ formatBytes(file?.size) }}
+      </p>
+    </div>
+  </div>
+</div>

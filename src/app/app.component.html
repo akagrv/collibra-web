@@ -1,46 +1,66 @@
-<amplify-authenticator
+<!-- <amplify-authenticator
   [signUpConfig]="signUpConfig"
   [usernameAttributes]="usernameAttributes"
 >
 </amplify-authenticator>
 
-<!-- 
-<mat-toolbar color="primary">
-  <span class="text-white">Collibra Web</span>
-
-  <span class="header-fill-remaining-space"></span>
-
-  <span class="text-white">Sign Out</span>
-</mat-toolbar>
- -->
-
 <div *ngIf="signedIn">
-  <div class="container" dragNdrop (fileDropped)="onFileDropped($event)">
-    <input
-      type="file"
-      #fileDropRef
-      id="fileDropRef"
-      multiple
-      (change)="fileUploadHandler($event.target.files)"
-    />
-    <img src="assets/img/dnd/ic-upload-file.svg" alt="" />
-    <h3>Drag and drop file here</h3>
-    <h3>or</h3>
-    <label for="fileDropRef">Browse for file</label>
-  </div>
-  <div class="files-list">
-    <div class="single-file" *ngFor="let file of files; let i = index">
-      <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file" />
-      <div class="info">
-        <h4 class="name">
-          {{ file?.key }}
-        </h4>
-        <p class="size">
-          {{ formatBytes(file?.size) }}
-        </p>
-      </div>
-    </div>
+  <div class="container button-container border-bottom">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" routerLink="/storage"
+          >Upload File to S3</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" routerLink="/collibra"
+          >Request Changes in Collibra Data Assets</a
+        >
+      </li>
+    </ul>
   </div>
 </div>
+
+<router-outlet></router-outlet>
+ -->
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarToggler"
+      aria-controls="navbarToggler"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarToggler">
+      <a class="navbar-brand" [routerLink]="['/']">
+        <span class="border rounded shadow p-1 lead">
+          <strong>CIMPL</strong>
+        </span>
+      </a>
+    </div>
+    <ul class="navbar-nav ml-auto mt-lg-0">
+      <li class="nav-item mr-2" *ngIf="auth.loggedIn | async">
+        <a class="btn btn-info" [routerLink]="['/storage']">Storage</a>
+      </li>
+      <li class="nav-item mr-2" *ngIf="auth.loggedIn | async">
+        <a class="btn btn-info" [routerLink]="['/collibra']">Collibra</a>
+      </li>
+      <li class="nav-item mr-2" *ngIf="!(auth.loggedIn | async)">
+        <a class="btn btn-info" [routerLink]="['/login']">Login</a>
+      </li>
+      <li class="nav-item mr-2" *ngIf="auth.loggedIn | async">
+        <a class="btn btn-warning" (click)="onClickLogout()">Logout</a>
+      </li>
+      <li class="nav-item mr-2" *ngIf="!(auth.loggedIn | async)">
+        <a class="btn btn-info" [routerLink]="['/signup']">Sign Up</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <router-outlet></router-outlet>

@@ -1,0 +1,88 @@
+<div class="container w-75 mt-4">
+  <div class="card">
+    <div class="card-header text-center h6">
+      Request change in Collibra Data Assets Form
+    </div>
+    <div class="card-body">
+      <form
+        [formGroup]="collibraForm"
+        (ngSubmit)="onSubmit(collibraForm.value)"
+      >
+        <div class="form-group">
+          <label>Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            required
+            placeholder="John Doe"
+          />
+        </div>
+        <div class="form-group">
+          <label>Asurite Id</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="asuriteId"
+            required
+            placeholder="jdoe"
+          />
+        </div>
+        <div class="form-group">
+          <label>Community Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="communityName"
+            placeholder="Redshift Data Warehouse"
+          />
+        </div>
+        <div class="form-group">
+          <label
+            >Schema Name
+            <span class="text-muted font-italic">(Optional)</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="schemaName"
+            placeholder="asu_financial_uto"
+          />
+        </div>
+        <div class="form-group">
+          <label
+            >Table Name
+            <span class="text-muted font-italic">(Optional)</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="tableName"
+            placeholder="uto_workforce"
+          />
+        </div>
+        <div class="form-group">
+          <label
+            >Column Name
+            <span class="text-muted font-italic">(Optional)</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="columnName"
+            placeholder="anticipated_hire_date"
+          />
+        </div>
+        <div class="form-group">
+          <label>Explain more about the changes</label>
+          <textarea
+            class="form-control"
+            formControlName="comments"
+            rows="4"
+          ></textarea>
+        </div>
+        <button class="btn btn-primary float-right">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
