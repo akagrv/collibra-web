@@ -1,7 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatToolbarModule } from "@angular/material/toolbar";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AmplifyUIAngularModule } from "@aws-amplify/ui-angular";
@@ -30,8 +28,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     AppRoutingModule,
     AmplifyUIAngularModule,
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
   ],
