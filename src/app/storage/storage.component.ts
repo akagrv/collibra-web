@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Storage } from "aws-amplify";
+import { AlertService } from "../_alert";
 
 @Component({
   selector: "app-storage",
@@ -9,7 +10,7 @@ import { Storage } from "aws-amplify";
 export class StorageComponent implements OnInit {
   files: any[] = [];
 
-  constructor() {}
+  constructor(private alerts: AlertService) {}
 
   ngOnInit() {
     this.displayAllFiles();
@@ -46,9 +47,13 @@ export class StorageComponent implements OnInit {
     Storage.put(file.name, file)
       .then((result) => {
         console.log(result);
+        this.alerts.success("File Uploaded!", { autoClose: true });
         this.displayAllFiles();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.alerts.error(JSON.stringify(err), { autoClose: true });
+        console.log(err);
+      });
   }
 
   /**

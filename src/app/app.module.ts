@@ -13,6 +13,7 @@ import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AlertModule } from "./_alert";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    AlertModule,
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent],

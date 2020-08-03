@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Storage } from "aws-amplify";
-import { summaryFileName } from "@angular/compiler/src/aot/util";
+import { AlertService } from "../_alert";
 
 @Component({
   selector: "app-collibra",
@@ -10,7 +10,7 @@ import { summaryFileName } from "@angular/compiler/src/aot/util";
 })
 export class CollibraComponent implements OnInit {
   public collibraForm: FormGroup;
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private alerts: AlertService) {}
 
   ngOnInit() {
     this.initForm();
@@ -34,10 +34,13 @@ export class CollibraComponent implements OnInit {
     console.log(fileName);
     Storage.put(fileName, value)
       .then((result) => {
-        window.alert("Request Submitted");
+        this.alerts.success("Request Submitted!", { autoClose: true });
         console.log(result);
         this.collibraForm.reset();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.alerts.error(JSON.stringify(err), { autoClose: true });
+        console.log(err);
+      });
   }
 }

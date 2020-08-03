@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "./../auth/auth.service";
+import { AlertService } from "../_alert";
 
 @Component({
   selector: "app-signup",
@@ -17,7 +18,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private alerts: AlertService
   ) {}
 
   ngOnInit() {
@@ -44,9 +46,11 @@ export class SignupComponent implements OnInit {
     this.auth.signUp(username, email, password).subscribe(
       (result) => {
         this.successfullySignup = true;
+        this.alerts.success("Sign Up Successful!", { autoClose: true });
       },
       (error) => {
         console.log(error);
+        this.alerts.error(error.message, { autoClose: true });
       }
     );
   }
@@ -56,9 +60,11 @@ export class SignupComponent implements OnInit {
     this.auth.confirmSignUp(this.email, confirmationCode).subscribe(
       (result) => {
         this.router.navigate(["/login"]);
+        this.alerts.success("Confirmation Successful!", { autoClose: true });
       },
       (error) => {
         console.log(error);
+        this.alerts.error(error.message, { autoClose: true });
       }
     );
   }

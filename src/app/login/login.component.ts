@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "./../auth/auth.service";
+import { AlertService } from "../_alert";
 
 @Component({
   selector: "app-login",
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private alerts: AlertService
   ) {}
 
   ngOnInit() {
@@ -34,9 +36,11 @@ export class LoginComponent implements OnInit {
     this.auth.signIn(email, password).subscribe(
       (result) => {
         this.router.navigate(["/"]);
+        this.alerts.success("Successfully Logged In!", { autoClose: true });
       },
       (error) => {
         console.log(error);
+        this.alerts.error(error.message, { autoClose: true });
       }
     );
   }
