@@ -1,5 +1,5 @@
 <div
-  class="upload-container mt-4"
+  class="upload-container mt-4 rounded shadow"
   dragNdrop
   (fileDropped)="onFileDropped($event)"
 >
@@ -15,16 +15,18 @@
   <h3>or</h3>
   <label for="fileDropRef">Browse for file</label>
 </div>
-<div class="files-list">
-  <div class="single-file" *ngFor="let file of files; let i = index">
-    <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file" />
-    <div class="info">
-      <h4 class="name">
-        {{ file?.key }}
-      </h4>
-      <p class="size">
-        {{ formatBytes(file?.size) }}
-      </p>
-    </div>
+<ul class="list-group w-50 mt-4 mx-auto">
+  <div *ngFor="let file of files">
+    <li class="list-group-item d-flex flex-row">
+      <img src="assets/img/dnd/ic-file.svg" width="40px" alt="file" />
+      <div class="ml-1 mt-1">
+        <h4 class="name">
+          {{ file?.key }}
+        </h4>
+        <p class="size m-0">
+          {{ formatBytes(file?.size) }}
+        </p>
+      </div>
+    </li>
   </div>
-</div>
+</ul>

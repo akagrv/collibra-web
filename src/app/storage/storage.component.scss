@@ -4,9 +4,10 @@
   align-items: center;
   flex-direction: column;
   text-align: center;
-  width: 40%;
+  width: 35%;
   margin: auto;
   min-height: 250px;
+  min-width: 250px;
   height: 40%;
   border: dashed 1px #979797;
   position: relative;
@@ -43,48 +44,17 @@
   animation-iteration-count: infinite;
 }
 
-.files-list {
-  margin-top: 1.5rem;
-  width: 50%;
-  margin: auto;
-  padding: 2rem;
+.name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #353f4a;
+  margin: 0;
+}
 
-  .single-file {
-    display: flex;
-    padding: 0.5rem;
-    justify-content: space-between;
-    align-items: center;
-    border: dashed 1px #979797;
-    margin-bottom: 1rem;
-
-    img.delete {
-      margin-left: 0.5rem;
-      cursor: pointer;
-      align-self: flex-end;
-    }
-
-    display: flex;
-    flex-grow: 1;
-
-    .name {
-      font-size: 14px;
-      font-weight: 500;
-      color: #353f4a;
-      margin: 0;
-    }
-
-    .size {
-      font-size: 12px;
-      font-weight: 500;
-      color: #a4a4a4;
-      margin: 0;
-      margin-bottom: 0.25rem;
-    }
-
-    .info {
-      width: 100%;
-    }
-  }
+.size {
+  font-size: 12px;
+  font-weight: 500;
+  color: #a4a4a4;
 }
 
 /* Shake animation */
