@@ -17,13 +17,18 @@ export class CollibraComponent implements OnInit {
   private dropdownConfig: object = dropdownConfig;
   private communityDropdownOptions: any;
   private domainDropdownOptions: any;
+  private IMPORT_URL: string =
+    "https://asu-dev.collibra.com/rest/2.0/import/json-job";
+  private DOMAIN_URL: string = "https://asu-dev.collibra.com/rest/2.0/domains";
+  private COMMUNITY_URL: string =
+    "https://asu-dev.collibra.com/rest/2.0/communities";
 
   constructor(private fb: FormBuilder, private alerts: AlertService) {}
 
   ngOnInit() {
     this.initForm();
     axios
-      .get("/communities", {
+      .get(this.COMMUNITY_URL, {
         auth: {
           username: "CollibraDevID",
           password: "c%R<U{,y!;45%[E8",
@@ -55,7 +60,7 @@ export class CollibraComponent implements OnInit {
 
   getDomainList(selected: any) {
     axios
-      .get("/domains", {
+      .get(this.DOMAIN_URL, {
         params: {
           communityId: selected.value.id,
         },
@@ -101,7 +106,7 @@ export class CollibraComponent implements OnInit {
     const formData = new FormData();
     formData.append("file", file);
     axios
-      .post("/api", formData, {
+      .post(this.IMPORT_URL, formData, {
         auth: {
           username: "CollibraDevID",
           password: "c%R<U{,y!;45%[E8",
