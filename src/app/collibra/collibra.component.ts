@@ -18,10 +18,11 @@ export class CollibraComponent implements OnInit {
   private communityDropdownOptions: any;
   private domainDropdownOptions: any;
   private IMPORT_URL: string =
-    "https://asu-dev.collibra.com/rest/2.0/import/json-job";
-  private DOMAIN_URL: string = "https://asu-dev.collibra.com/rest/2.0/domains";
+    "https://cors-anywhere.herokuapp.com/https://asu-dev.collibra.com/rest/2.0/import/json-job";
+  private DOMAIN_URL: string =
+    "https://cors-anywhere.herokuapp.com/https://asu-dev.collibra.com/rest/2.0/domains";
   private COMMUNITY_URL: string =
-    "https://asu-dev.collibra.com/rest/2.0/communities";
+    "https://cors-anywhere.herokuapp.com/https://asu-dev.collibra.com/rest/2.0/communities";
 
   constructor(private fb: FormBuilder, private alerts: AlertService) {}
 
