@@ -8,7 +8,7 @@
         [formGroup]="collibraForm"
         (ngSubmit)="onSubmit(collibraForm.value)"
       >
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Name</label>
           <input
             type="text"
@@ -16,8 +16,12 @@
             formControlName="name"
             required
             placeholder="John Doe"
+            [ngClass]="{ 'is-invalid': submitted && form.name.errors }"
           />
-        </div>
+          <div *ngIf="submitted && form.name.errors" class="invalid-feedback">
+            <div *ngIf="form.name.errors.required">Name is required</div>
+          </div>
+        </div> -->
         <div class="form-group">
           <label>Asurite Id</label>
           <input
@@ -25,63 +29,105 @@
             class="form-control"
             formControlName="asuriteId"
             required
-            placeholder="jdoe"
+            placeholder="E.g. 'jdoe' for John Doe"
+            [ngClass]="{ 'is-invalid': submitted && form.asuriteId.errors }"
           />
+          <div
+            *ngIf="submitted && form.asuriteId.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form.asuriteId.errors.required">
+              Asurite Id is required
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Community Name</label>
-          <input
-            type="text"
-            class="form-control"
+          <ngx-select-dropdown
+            [config]="dropdownConfig"
+            [options]="communityDropdownOptions"
             formControlName="communityName"
-            placeholder="Redshift Data Warehouse"
-          />
+            [ngClass]="{ 'is-invalid': submitted && form.communityName.errors }"
+            (change)="getDomainList($event)"
+          ></ngx-select-dropdown>
+
+          <!-- <input
+            type="text"
+            class="form-control"
+          /> -->
+          <div
+            *ngIf="submitted && form.communityName.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form.communityName.errors.required">
+              Community Name is required
+            </div>
+          </div>
         </div>
         <div class="form-group">
-          <label
-            >Schema Name
-            <span class="text-muted font-italic">(Optional)</span></label
+          <label>Domain Name</label>
+          <ngx-select-dropdown
+            [config]="dropdownConfig"
+            [options]="domainDropdownOptions"
+            formControlName="domainName"
+            [ngClass]="{ 'is-invalid': submitted && form.domainName.errors }"
+          ></ngx-select-dropdown>
+          <div
+            *ngIf="submitted && form.domainName.errors"
+            class="invalid-feedback"
           >
+            <div *ngIf="form.domainName.errors.required">
+              Domain Name is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Asset Type</label>
+          <select class="form-control" formControlName="assetType">
+            <option *ngFor="let type of assetTypes" [ngValue]="type">{{
+              type
+            }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Asset Name</label>
           <input
             type="text"
             class="form-control"
-            formControlName="schemaName"
-            placeholder="asu_financial_uto"
-          />
-        </div>
-        <div class="form-group">
-          <label
-            >Table Name
-            <span class="text-muted font-italic">(Optional)</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            formControlName="tableName"
-            placeholder="uto_workforce"
-          />
-        </div>
-        <div class="form-group">
-          <label
-            >Column Name
-            <span class="text-muted font-italic">(Optional)</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            formControlName="columnName"
+            required
+            formControlName="assetName"
             placeholder="anticipated_hire_date"
+            [ngClass]="{ 'is-invalid': submitted && form.assetName.errors }"
           />
+          <div
+            *ngIf="submitted && form.assetName.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form.assetName.errors.required">
+              Asset Name is required
+            </div>
+          </div>
         </div>
         <div class="form-group">
-          <label>Explain more about the changes</label>
+          <label>Enter the comment: </label>
           <textarea
             class="form-control"
-            formControlName="comments"
+            formControlName="comment"
             rows="4"
+            [ngClass]="{ 'is-invalid': submitted && form.comment.errors }"
           ></textarea>
+          <div
+            *ngIf="submitted && form.comment.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form.comment.errors.required">
+              Please enter the notes/comments you want to make for the asset.
+            </div>
+          </div>
         </div>
-        <button class="btn btn-primary float-right">Submit</button>
+        <button class="btn btn-primary float-right">
+          Submit
+        </button>
       </form>
     </div>
   </div>

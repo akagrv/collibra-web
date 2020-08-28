@@ -1,0 +1,23 @@
+{
+    "/api": {
+        "target": "https://asu-dev.collibra.com/rest/2.0/import/json-job",
+        "secure": true,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    },
+    "/communities": {
+        "target": "https://asu-dev.collibra.com/rest/2.0/communities",
+        "secure": true,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/communities": ""
+        }
+    },
+    "/domains": {
+        "target": "https://asu-dev.collibra.com/rest/2.0/",
+        "secure": true,
+        "changeOrigin": true
+    }
+}

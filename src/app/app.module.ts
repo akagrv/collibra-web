@@ -14,6 +14,7 @@ import { SignupComponent } from "./signup/signup.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AlertModule } from "./_alert";
+import { SelectDropDownModule } from "ngx-select-dropdown";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AlertModule } from "./_alert";
     FormsModule,
     ReactiveFormsModule,
     AlertModule,
+    SelectDropDownModule,
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent],
