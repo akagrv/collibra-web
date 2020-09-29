@@ -1,6 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Storage } from "aws-amplify";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+  FormControl,
+} from "@angular/forms";
 import { AlertService } from "../_alert";
 import axios from "axios";
 import { dropdownConfig } from "./constants";
@@ -17,14 +22,35 @@ export class CollibraComponent implements OnInit {
   private dropdownConfig: object = dropdownConfig;
   private communityDropdownOptions: any;
   private domainDropdownOptions: any;
+  private assetDropdownOptions: any;
   private IMPORT_URL: string =
     "https://cors-anywhere.herokuapp.com/https://asu-dev.collibra.com/rest/2.0/import/json-job";
   private DOMAIN_URL: string =
     "https://cors-anywhere.herokuapp.com/https://asu-dev.collibra.com/rest/2.0/domains";
   private COMMUNITY_URL: string =
     "https://cors-anywhere.herokuapp.com/https://asu-dev.collibra.com/rest/2.0/communities";
+  private ASSET_URL: string =
+    "https://cors-anywhere.herokuapp.com/https://asu-dev.collibra.com/rest/2.0/assets";
 
-  constructor(private fb: FormBuilder, private alerts: AlertService) {}
+  private selectedDomainId: any = "";
+  private assetTypeId = {
+    Schema: "00000000-0000-0000-0001-000400000002",
+    Table: "00000000-0000-0000-0000-000000031007",
+    Column: "00000000-0000-0000-0000-000000031008",
+  };
+
+  private attributes: Array<String> = ["Description", "Note"];
+
+  private isChecked: any = {
+    Description: false,
+    Note: false,
+  };
+
+  constructor(
+    private fb: FormBuilder,
+    private alerts: AlertService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -46,17 +72,49 @@ export class CollibraComponent implements OnInit {
   initForm() {
     this.collibraForm = this.fb.group({
       //name: ["", Validators.required],
-      asuriteId: ["", Validators.required],
+      // asuriteId: ["", Validators.required],
       communityName: ["", Validators.required],
       domainName: ["", Validators.required],
-      assetType: [this.assetTypes[2], Validators.required],
+      assetType: ["", Validators.required],
       assetName: ["", Validators.required],
-      comment: ["", Validators.required],
+      checkArray: this.fb.array([], [Validators.required]),
+      Note: ["", Validators.required],
+      Description: ["", Validators.required],
+    });
+
+    this.attributes.forEach((attribute: string) => {
+      this.collibraForm.get(attribute).disable();
     });
   }
 
   get form() {
     return this.collibraForm.controls;
+  }
+
+  onCheckboxChange(e) {
+    let value = e.target.value;
+    const checkArray: FormArray = this.collibraForm.get(
+      "checkArray"
+    ) as FormArray;
+
+    if (e.target.checked) {
+      checkArray.push(new FormControl(value));
+      this.collibraForm.get(value).enable();
+      this.isChecked[value] = true;
+    } else {
+      let i: number = 0;
+      checkArray.controls.forEach((item: FormControl) => {
+        if (item.value == value) {
+          checkArray.removeAt(i);
+          this.collibraForm.get(value).disable();
+          this.isChecked[value] = false;
+          this.cd.detectChanges();
+          return;
+        }
+        i++;
+      });
+    }
+    this.cd.detectChanges();
   }
 
   getDomainList(selected: any) {
@@ -72,6 +130,28 @@ export class CollibraComponent implements OnInit {
       })
       .then((res) => {
         this.domainDropdownOptions = res.data.results;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  getAssetList(selected: any) {
+    axios
+      .get(this.ASSET_URL, {
+        params: {
+          communityId: this.selectedDomainId.community.id,
+          domainId: this.selectedDomainId.id,
+          typeId: this.assetTypeId[selected.target.value],
+          limit: "50000", // TODO: handle larger requests
+        },
+        auth: {
+          username: "CollibraDevID",
+          password: "c%R<U{,y!;45%[E8",
+        },
+      })
+      .then((res) => {
+        this.assetDropdownOptions = res.data.results;
       })
       .catch((err) => {
         console.log(err);
@@ -96,12 +176,22 @@ export class CollibraComponent implements OnInit {
         console.log(err);
       }); */
     let file: File;
+    let attributes_obj = {};
+    this.attributes.forEach((attribute: string) => {
+      if (this.isChecked[attribute]) {
+        attributes_obj[attribute] = [
+          {
+            value: value[attribute],
+          },
+        ];
+      }
+    });
     file = this.getJSONTemplate(
       value.communityName.name,
       value.domainName.name,
       value.assetType,
-      value.assetName,
-      value.comment
+      value.assetName.name,
+      attributes_obj
     );
 
     const formData = new FormData();
@@ -130,8 +220,9 @@ export class CollibraComponent implements OnInit {
     domainName: string,
     assetType: string,
     assetName: string,
-    comment: string
+    attributes_obj: any
   ): File {
+    debugger;
     let jsonObj: object = {
       resourceType: "Asset",
       identifier: {
@@ -143,9 +234,7 @@ export class CollibraComponent implements OnInit {
           },
         },
       },
-      attributes: {
-        Note: [{ value: comment }],
-      },
+      attributes: attributes_obj,
       type: {
         name: assetType,
       },

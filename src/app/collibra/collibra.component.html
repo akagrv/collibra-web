@@ -22,7 +22,7 @@
             <div *ngIf="form.name.errors.required">Name is required</div>
           </div>
         </div> -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Asurite Id</label>
           <input
             type="text"
@@ -40,7 +40,7 @@
               Asurite Id is required
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="form-group">
           <label>Community Name</label>
           <ngx-select-dropdown
@@ -71,6 +71,7 @@
             [options]="domainDropdownOptions"
             formControlName="domainName"
             [ngClass]="{ 'is-invalid': submitted && form.domainName.errors }"
+            [(ngModel)]="selectedDomainId"
           ></ngx-select-dropdown>
           <div
             *ngIf="submitted && form.domainName.errors"
@@ -83,22 +84,42 @@
         </div>
         <div class="form-group">
           <label>Asset Type</label>
-          <select class="form-control" formControlName="assetType">
-            <option *ngFor="let type of assetTypes" [ngValue]="type">{{
-              type
-            }}</option>
+          <select
+            class="form-control"
+            formControlName="assetType"
+            (change)="getAssetList($event)"
+            [ngClass]="{ 'is-invalid': submitted && form.assetType.errors }"
+          >
+            <option value="">Select Asset Type</option>
+            <option *ngFor="let type of assetTypes" [value]="type">
+              {{ type }}
+            </option>
           </select>
+        </div>
+        <div
+          *ngIf="submitted && form.assetType.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="form.assetType.errors.required">
+            Asset Type is required
+          </div>
         </div>
         <div class="form-group">
           <label>Asset Name</label>
-          <input
+          <ngx-select-dropdown
+            [config]="dropdownConfig"
+            [options]="assetDropdownOptions"
+            formControlName="assetName"
+            [ngClass]="{ 'is-invalid': submitted && form.assetName.errors }"
+          ></ngx-select-dropdown>
+          <!-- <input
             type="text"
             class="form-control"
             required
             formControlName="assetName"
             placeholder="anticipated_hire_date"
             [ngClass]="{ 'is-invalid': submitted && form.assetName.errors }"
-          />
+          /> -->
           <div
             *ngIf="submitted && form.assetName.errors"
             class="invalid-feedback"
@@ -108,24 +129,59 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label>Enter the comment: </label>
-          <textarea
-            class="form-control"
-            formControlName="comment"
-            rows="4"
-            [ngClass]="{ 'is-invalid': submitted && form.comment.errors }"
-          ></textarea>
+        <div class="form-group" formArrayName="checkArray">
+          <label> Select asset attributes you want to change: </label>
+          <div *ngFor="let attr of attributes; let i = index">
+            <input
+              type="checkbox"
+              [value]="attr"
+              (change)="onCheckboxChange($event)"
+            />
+            {{ attr }}
+          </div>
           <div
-            *ngIf="submitted && form.comment.errors"
+            *ngIf="submitted && form.checkArray.errors"
+            class="text-danger"
+            style="font-size: 80%"
+          >
+            <div *ngIf="form.checkArray.errors.required">
+              Please select atleast 1 attribute field.
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isChecked['Description']" class="form-group">
+          <label>Enter description for the selected asset: </label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="Description"
+            [ngClass]="{ 'is-invalid': submitted && form.Description.errors }"
+          />
+          <div
+            *ngIf="submitted && form.Description.errors"
             class="invalid-feedback"
           >
-            <div *ngIf="form.comment.errors.required">
+            <div *ngIf="form.Description.errors.required">
+              Please enter the description for the asset.
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isChecked['Note']" class="form-group">
+          <label>Enter Notes for the selected asset: </label>
+          <textarea
+            class="form-control"
+            formControlName="Note"
+            rows="4"
+            [ngClass]="{ 'is-invalid': submitted && form.Note.errors }"
+          ></textarea>
+          <div *ngIf="submitted && form.Note.errors" class="invalid-feedback">
+            <div *ngIf="form.Note.errors.required">
               Please enter the notes/comments you want to make for the asset.
             </div>
           </div>
         </div>
-        <button class="btn btn-primary float-right">
+        <!-- <button type="submit" [disabled]="!collibraForm.valid">Submit</button> -->
+        <button type="submit" class="btn btn-primary float-right">
           Submit
         </button>
       </form>

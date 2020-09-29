@@ -15,6 +15,7 @@ import { AuthGuard } from "./auth/auth.guard";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AlertModule } from "./_alert";
 import { SelectDropDownModule } from "ngx-select-dropdown";
+import { SSOAuth } from "./auth/sso-auth";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { SelectDropDownModule } from "ngx-select-dropdown";
     AlertModule,
     SelectDropDownModule,
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, SSOAuth],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

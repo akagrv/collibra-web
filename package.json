@@ -28,6 +28,7 @@
     "ngx-select-dropdown": "^1.4.4",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.6.0",
+    "sjcl": "^1.0.8",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
